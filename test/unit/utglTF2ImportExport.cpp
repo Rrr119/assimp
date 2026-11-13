@@ -283,6 +283,48 @@ TEST_F(utglTF2ImportExport, exportExternalBasisUniversalTexturePath) {
     ::remove(binary.c_str());
 }
 
+TEST_F(utglTF2ImportExport, export_KHR_materials_volume_thickness_factor) {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(
+            ASSIMP_TEST_MODELS_DIR "/glTF2/BoxTextured-glTF/BoxTextured.gltf",
+            aiProcess_ValidateDataStructure);
+    ASSERT_NE(nullptr, scene);
+    ASSERT_GT(scene->mNumMaterials, 0u);
+
+    scene->mMaterials[0]->Clear();
+    const ai_real thickness = static_cast<ai_real>(0.25);
+    ASSERT_EQ(aiReturn_SUCCESS,
+            scene->mMaterials[0]->AddProperty(
+                    &thickness, 1, AI_MATKEY_VOLUME_THICKNESS_FACTOR));
+
+    const std::string output = std::string(ASSIMP_TEST_MODELS_DIR) +
+            "/glTF2/volume_thickness_export_test.gltf";
+    Assimp::Exporter exporter;
+    ASSERT_EQ(aiReturn_SUCCESS, exporter.Export(scene, "gltf2", output.c_str()))
+            << exporter.GetErrorString();
+
+    std::ifstream input(output);
+    ASSERT_TRUE(input.good());
+    std::stringstream contents;
+    contents << input.rdbuf();
+    rapidjson::Document document;
+    document.Parse(contents.str().c_str());
+    ASSERT_FALSE(document.HasParseError());
+
+    ASSERT_TRUE(document.HasMember("materials"));
+    ASSERT_GT(document["materials"].Size(), 0u);
+    const auto &material = document["materials"][0];
+    ASSERT_TRUE(material.HasMember("extensions"));
+    ASSERT_TRUE(material["extensions"].HasMember("KHR_materials_volume"));
+    EXPECT_FLOAT_EQ(0.25f,
+            material["extensions"]["KHR_materials_volume"]["thicknessFactor"]
+                    .GetFloat());
+
+    ::remove(output.c_str());
+    const std::string binary = output.substr(0, output.size() - 5) + ".bin";
+    ::remove(binary.c_str());
+}
+
 TEST_F(utglTF2ImportExport, importglTF2AndExport_KHR_materials_clearcoat) {
     {
         Assimp::Importer importer;
@@ -1090,6 +1132,28 @@ TEST_F(utglTF2ImportExport, import_dracoEncoded) {
         ASSERT_EQ(strcmp(version.C_Str(), "2.0"), 0);
     }
 #endif
+}
+
+TEST_F(utglTF2ImportExport, unsupportedRequiredExtensionIsRejected) {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(
+            ASSIMP_TEST_MODELS_DIR "/glTF2/BoxTextured-glTF-techniqueWebGL/BoxTextured.gltf",
+            aiProcess_ValidateDataStructure);
+
+    EXPECT_EQ(nullptr, scene);
+    EXPECT_NE(std::string::npos,
+            std::string(importer.GetErrorString()).find(
+                    "Unsupported required extension: KHR_technique_webgl"));
+}
+
+TEST_F(utglTF2ImportExport, unsupportedUsedExtensionIsIgnored) {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(
+            ASSIMP_TEST_MODELS_DIR "/glTF2/unknown_extension_used_only.gltf",
+            0);
+
+    EXPECT_NE(nullptr, scene);
+    EXPECT_STREQ("", importer.GetErrorString());
 }
 
 TEST_F(utglTF2ImportExport, wrongTypes) {

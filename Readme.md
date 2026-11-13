@@ -49,6 +49,25 @@ Clone [our model database for testing purposes](https://github.com/assimp/assimp
 ## Supported file formats
 See [the complete list of supported formats](https://github.com/assimp/assimp/blob/master/doc/Fileformats.md).
 
+### glTF 2.0 extensions
+Assimp recognizes 15 glTF 2.0 extension IDs on import. The exporter emits 11 material/texture extension IDs plus the
+`FB_ngon_encoding` primitive marker. Highlights and limitations:
+
+- Material extensions are imported, and exported where applicable: `KHR_materials_specular`, `KHR_materials_unlit`,
+  `KHR_materials_sheen`, `KHR_materials_clearcoat`, `KHR_materials_transmission`, `KHR_materials_volume`,
+  `KHR_materials_ior`, `KHR_materials_emissive_strength`, and `KHR_materials_anisotropy`.
+- `KHR_materials_pbrSpecularGlossiness` is deprecated; export requires the opt-in
+  `AI_CONFIG_USE_GLTF_PBR_SPECULAR_GLOSSINESS` property.
+- `KHR_lights_punctual` and `KHR_texture_transform` are import-only. Lights and texture transforms are not exported.
+- `KHR_texture_basisu` (KTX2) and `EXT_texture_webp` are partial: payloads are passed through as raw texture data and
+  are not decoded or transcoded.
+- `KHR_draco_mesh_compression` is available only with `ASSIMP_BUILD_DRACO=ON` and supports triangle and triangle-strip
+  primitives.
+- Unknown `extensionsUsed` IDs are ignored. Unknown `extensionsRequired` IDs cause a clear import error.
+
+See [the complete glTF 2.0 extension table](doc/Fileformats.md#gltf-20-extension-support) for per-extension status and
+limitations. Run `python3 scripts/gltf2_extension_matrix.py` to scan the test assets and regenerate the support matrix.
+
 ## Building
 Start by reading [our build instructions](https://github.com/assimp/assimp/blob/master/Build.md). We are available in vcpkg, and our build system is CMake; if you used CMake before there is a good chance you know what to do.
 

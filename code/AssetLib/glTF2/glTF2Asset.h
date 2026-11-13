@@ -42,18 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** @file glTFAsset.h
  * Declares a glTF class to handle gltf/glb files
  *
- * glTF Extensions Support:
- *   KHR_materials_pbrSpecularGlossiness full
- *   KHR_materials_specular full
- *   KHR_materials_unlit full
- *   KHR_lights_punctual full
- *   KHR_materials_sheen full
- *   KHR_materials_clearcoat full
- *   KHR_materials_transmission full
- *   KHR_materials_volume full
- *   KHR_materials_ior full
- *   KHR_materials_emissive_strength full
- *   KHR_materials_anisotropy full
+ * See doc/Fileformats.md for the current glTF 2.0 extension support matrix.
  */
 #ifndef GLTF2ASSET_H_INC
 #define GLTF2ASSET_H_INC

@@ -20,12 +20,7 @@ __Importers__:
 - ENFF
 - [FBX](https://en.wikipedia.org/wiki/FBX)
 - [glTF 1.0](https://en.wikipedia.org/wiki/GlTF#glTF_1.0) + GLB
-- [glTF 2.0](https://en.wikipedia.org/wiki/GlTF#glTF_2.0):
-  At the moment for glTF2.0 the following extensions are supported:
-  + KHR_lights_punctual ( 5.0 )
-  + KHR_materials_pbrSpecularGlossiness ( 5.0 )
-  + KHR_materials_unlit ( 5.0 )
-  + KHR_texture_transform ( 5.1 under test )
+- [glTF 2.0](https://en.wikipedia.org/wiki/GlTF#glTF_2.0) + GLB (see [glTF 2.0 extension support](#gltf-20-extension-support))
 - HMB
 - IFC-STEP
 - IQM
@@ -96,3 +91,44 @@ __Exporters__:
 - glTF 2.0 (partial)
 - 3MF ( experimental )
 - FBX ( experimental )
+
+#### glTF 2.0 extension support ####
+
+The table covers the extensions wired into the glTF 2.0 importer and exporter. Status values:
+
+- **Full**: the extension data is mapped to Assimp scene/material data, or emitted from it.
+- **Partial**: only part of the extension is handled. Raw/compressed texture payloads are not decoded.
+- **Gated**: support depends on a build option.
+- **Opt-in**: export only happens when the documented export property is enabled.
+- **None**: the extension is not handled by that direction.
+
+| Extension | Import | Export | Limitations |
+| --- | --- | --- | --- |
+| `KHR_lights_punctual` | Full | None | Punctual lights map to `aiLight`; `range` is stored as `PBR_LightRange` node metadata. Lights are not exported. |
+| `KHR_materials_pbrSpecularGlossiness` | Full | Opt-in | Deprecated. Export requires `AI_CONFIG_USE_GLTF_PBR_SPECULAR_GLOSSINESS`; the default export uses `KHR_materials_specular`. |
+| `KHR_materials_specular` | Full | Full | Not emitted for unlit materials or when `KHR_materials_pbrSpecularGlossiness` is active. |
+| `KHR_materials_unlit` | Full | Full | Mutually exclusive with other material extensions during export. |
+| `KHR_texture_transform` | Partial | None | Imported as `aiUVTransform` with glTF-to-Assimp coordinate conversion. The extension's `texCoord` override and export are not supported. |
+| `KHR_materials_sheen` | Full | Full | A zero sheen color factor is treated as disabled on export. |
+| `KHR_materials_clearcoat` | Full | Full | A zero clearcoat factor is treated as disabled on export. |
+| `KHR_materials_transmission` | Full | Full | Maps factor and texture through `AI_MATKEY_TRANSMISSION_*`. |
+| `KHR_materials_volume` | Full | Full | Maps thickness, attenuation distance and attenuation color to the corresponding Assimp material keys. |
+| `KHR_materials_ior` | Full | Full | Maps IOR to `AI_MATKEY_REFRACTI`. |
+| `KHR_materials_emissive_strength` | Full | Full | Maps emissive strength to `AI_MATKEY_EMISSIVE_INTENSITY`. |
+| `KHR_materials_anisotropy` | Full | Full | A zero anisotropy strength is treated as disabled on export. |
+| `KHR_draco_mesh_compression` | Gated | None | Requires `ASSIMP_BUILD_DRACO=ON`. Decoding is limited to `TRIANGLES` and `TRIANGLE_STRIP` primitives. |
+| `KHR_texture_basisu` | Partial | Partial | KTX2 payloads are passed through as raw `aiTexture` data, not transcoded. Export marks the extension as required. |
+| `EXT_texture_webp` | Partial | None | WebP payloads are passed through as raw texture data; pixels are not decoded and the extension is not exported. |
+| `FB_ngon_encoding` | None | Partial | Export-only marker for `aiPrimitiveType_NGONEncodingFlag` primitives; it is listed in `extensionsUsed` for every export. |
+
+Unknown extension IDs in `extensionsUsed` are ignored, as permitted by the glTF specification. An unknown ID in
+`extensionsRequired` makes the import fail with `GLTF: Unsupported required extension: <id>`; this includes
+`KHR_technique_webgl`, which is kept as a negative test fixture.
+
+The extension matrix can be regenerated from the glTF 2.0 test assets. It scans both `.gltf` JSON files and the JSON
+chunk of `.glb` files:
+
+```bash
+python3 scripts/gltf2_extension_matrix.py
+python3 scripts/gltf2_extension_matrix.py --format json
+```

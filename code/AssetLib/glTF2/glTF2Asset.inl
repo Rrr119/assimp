@@ -2230,6 +2230,32 @@ inline void Asset::SetAsBinary() {
 #define CHECK_REQUIRED_EXT(EXT) \
     if (exts.find(#EXT) != exts.end()) extensionsRequired.EXT = true;
 
+inline bool IsRecognizedImportExtension(const std::string &extension) {
+    static const char *const supportedExtensions[] = {
+        "KHR_materials_pbrSpecularGlossiness",
+        "KHR_materials_specular",
+        "KHR_materials_unlit",
+        "KHR_lights_punctual",
+        "KHR_texture_transform",
+        "KHR_materials_sheen",
+        "KHR_materials_clearcoat",
+        "KHR_materials_transmission",
+        "KHR_materials_volume",
+        "KHR_materials_ior",
+        "KHR_materials_emissive_strength",
+        "KHR_materials_anisotropy",
+        "KHR_draco_mesh_compression",
+        "KHR_texture_basisu",
+        "EXT_texture_webp"
+    };
+    for (const char *supportedExtension : supportedExtensions) {
+        if (extension == supportedExtension) {
+            return true;
+        }
+    }
+    return false;
+}
+
 inline void Asset::ReadExtensionsRequired(Document &doc) {
     Value *extsRequired = FindArray(doc, "extensionsRequired");
     if (nullptr == extsRequired) {
@@ -2239,7 +2265,11 @@ inline void Asset::ReadExtensionsRequired(Document &doc) {
     std::gltf_unordered_map<std::string, bool> exts;
     for (unsigned int i = 0; i < extsRequired->Size(); ++i) {
         if ((*extsRequired)[i].IsString()) {
-            exts[(*extsRequired)[i].GetString()] = true;
+            const std::string extension = (*extsRequired)[i].GetString();
+            if (!IsRecognizedImportExtension(extension)) {
+                throw DeadlyImportError("GLTF: Unsupported required extension: ", extension);
+            }
+            exts[extension] = true;
         }
     }
 
