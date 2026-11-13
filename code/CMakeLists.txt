@@ -772,6 +772,8 @@ SET( PostProcessing_SRCS
   PostProcessing/OptimizeMeshes.h
   PostProcessing/DeboneProcess.cpp
   PostProcessing/DeboneProcess.h
+  PostProcessing/DecimateProcess.cpp
+  PostProcessing/DecimateProcess.h
   PostProcessing/ProcessHelper.h
   PostProcessing/ProcessHelper.cpp
   PostProcessing/MakeVerboseFormat.cpp

@@ -56,6 +56,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
+/** @brief 64-bit post-processing flag type.
+ *
+ * The historical 32-bit flag space is exhausted. New steps use this type so
+ * they can be combined with the existing #aiPostProcessSteps values.
+ */
+typedef uint64_t aiPostProcessFlags;
+
 // -----------------------------------------------------------------------------------
 /** @enum  aiPostProcessSteps
  *  @brief Defines the flags for all possible post processing steps.
@@ -604,6 +611,67 @@ enum aiPostProcessSteps
      */
     aiProcess_GenBoundingBoxes = 0x80000000
 };
+
+// ---------------------------------------------------------------------------------------
+/** <hr>Simplifies triangle meshes with quadric error metric (QEM) edge collapses.
+ *
+ * The target can be specified either as an absolute triangle count or as a
+ * ratio of the input triangle count. Configure it with
+ * <tt>#AI_CONFIG_PP_DECIMATE_TARGET_FACES</tt> and
+ * <tt>#AI_CONFIG_PP_DECIMATE_TARGET_RATIO</tt>. An absolute target takes
+ * precedence over a ratio.
+ *
+ * UV seam vertices are locked so that charts are not merged and texture
+ * coordinates remain inside their original bounds. The collapse cost also
+ * includes a normal-angle penalty; configure its weight with
+ * <tt>#AI_CONFIG_PP_DECIMATE_NORMAL_ANGLE_WEIGHT</tt>.
+ *
+ * Meshes are simplified independently, so material assignments, material
+ * groups, and the node hierarchy are preserved. Skinned meshes keep their
+ * bones and receive renormalized, interpolated vertex weights.
+ *
+ * Only triangle meshes are processed. Use #aiProcess_Triangulate before
+ * this step for imported meshes that may contain polygons. Morph-target
+ * meshes are left unchanged because their topology cannot be simplified
+ * without rebuilding the morph targets.
+ *
+ * @note This flag uses bit 32 and therefore requires the 64-bit
+ * #aiPostProcessFlags type.
+ */
+#define aiProcess_Decimate (((aiPostProcessFlags)1) << 32)
+
+// ---------------------------------------------------------------------------------------
+/** @brief Options for the #aiProcess_Decimate step.
+ *
+ * The same values can be supplied through Importer properties. If
+ * mTargetFaceCount is zero, mTargetRatio is used. A non-positive ratio selects
+ * #AI_DECIMATE_DEFAULT_TARGET_RATIO.
+ */
+typedef struct aiDecimateSettings {
+    /** Absolute target triangle count for the whole scene. Zero disables it. */
+    ai_uint32 mTargetFaceCount;
+
+    /** Target triangle ratio in (0, 1], relative to the input triangle count. */
+    ai_real mTargetRatio;
+
+    /** Weight of the normal-angle penalty in the collapse cost. */
+    ai_real mNormalAngleWeight;
+
+    /** Relative position tolerance used to detect duplicated UV seam vertices. */
+    ai_real mUvSeamEpsilon;
+} aiDecimateSettings;
+
+#ifndef AI_DECIMATE_DEFAULT_TARGET_RATIO
+#define AI_DECIMATE_DEFAULT_TARGET_RATIO 0.5f
+#endif
+
+#ifndef AI_DECIMATE_DEFAULT_NORMAL_ANGLE_WEIGHT
+#define AI_DECIMATE_DEFAULT_NORMAL_ANGLE_WEIGHT 0.25f
+#endif
+
+#ifndef AI_DECIMATE_DEFAULT_UV_SEAM_EPSILON
+#define AI_DECIMATE_DEFAULT_UV_SEAM_EPSILON 1e-5f
+#endif
 
 
 // ---------------------------------------------------------------------------------------

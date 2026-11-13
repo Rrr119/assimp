@@ -492,6 +492,48 @@ enum aiComponent
 #define AI_CONFIG_PP_FID_IGNORE_TEXTURECOORDS        \
     "PP_FID_IGNORE_TEXTURECOORDS"
 
+// ---------------------------------------------------------------------------
+/** @brief Input parameter to the #aiProcess_Decimate step:
+ *  Absolute target triangle count for the whole scene.
+ *
+ * An absolute target takes precedence over #AI_CONFIG_PP_DECIMATE_TARGET_RATIO.
+ * Zero leaves the ratio in charge.
+ * Property type: integer. Default value: 0.
+ */
+#define AI_CONFIG_PP_DECIMATE_TARGET_FACES \
+    "PP_DECIMATE_TARGET_FACES"
+
+// ---------------------------------------------------------------------------
+/** @brief Input parameter to the #aiProcess_Decimate step:
+ *  Target triangle count as a ratio of the original triangle count.
+ *
+ * The value must be in (0, 1]. Values outside this range are clamped.
+ * Property type: float. Default value: #AI_DECIMATE_DEFAULT_TARGET_RATIO.
+ */
+#define AI_CONFIG_PP_DECIMATE_TARGET_RATIO \
+    "PP_DECIMATE_TARGET_RATIO"
+
+// ---------------------------------------------------------------------------
+/** @brief Input parameter to the #aiProcess_Decimate step:
+ *  Weight of the normal-angle term in the QEM collapse cost.
+ *
+ * Higher values preserve hard edges and normals more aggressively.
+ * Property type: float. Default value: #AI_DECIMATE_DEFAULT_NORMAL_ANGLE_WEIGHT.
+ */
+#define AI_CONFIG_PP_DECIMATE_NORMAL_ANGLE_WEIGHT \
+    "PP_DECIMATE_NORMAL_ANGLE_WEIGHT"
+
+// ---------------------------------------------------------------------------
+/** @brief Input parameter to the #aiProcess_Decimate step:
+ *  Relative tolerance used when grouping coincident vertices for UV seam
+ *  detection.
+ *
+ * The tolerance is measured relative to the mesh bounding-box diagonal.
+ * Property type: float. Default value: #AI_DECIMATE_DEFAULT_UV_SEAM_EPSILON.
+ */
+#define AI_CONFIG_PP_DECIMATE_UV_SEAM_EPSILON \
+    "PP_DECIMATE_UV_SEAM_EPSILON"
+
 // TransformUVCoords evaluates UV scalings
 #define AI_UVTRAFO_SCALING 0x1
 

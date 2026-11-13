@@ -390,10 +390,10 @@ aiReturn Exporter::Export( const aiScene* pScene, const char* pFormatId, const c
                 // steps that are not idempotent, i.e. we might need to run them again, usually to get back to the
                 // original state before the step was applied first. When checking which steps we don't need
                 // to run, those are excluded.
-                const unsigned int nonIdempotentSteps = aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_MakeLeftHanded;
+                const aiPostProcessFlags nonIdempotentSteps = aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_MakeLeftHanded;
 
                 // Erase all pp steps that were already applied to this scene
-                const unsigned int pp = (exp.mEnforcePP | pPreprocessing) & ~(priv && !priv->mIsCopy
+                const aiPostProcessFlags pp = (exp.mEnforcePP | pPreprocessing) & ~(priv && !priv->mIsCopy
                     ? (priv->mPPStepsApplied & ~nonIdempotentSteps)
                     : 0u);
 
@@ -412,7 +412,7 @@ aiReturn Exporter::Export( const aiScene* pScene, const char* pFormatId, const c
                     for( unsigned int a = 0; a < pimpl->mPostProcessingSteps.size(); a++) {
                         BaseProcess* const p = pimpl->mPostProcessingSteps[a];
 
-                        if (p->IsActive(pp) && p->RequireVerboseFormat()) {
+                        if (p->IsActiveEx(pp) && p->RequireVerboseFormat()) {
                             verbosify = true;
                             break;
                         }
@@ -464,7 +464,7 @@ aiReturn Exporter::Export( const aiScene* pScene, const char* pFormatId, const c
                     for( unsigned int a = 0; a < pimpl->mPostProcessingSteps.size(); a++) {
                         BaseProcess* const p = pimpl->mPostProcessingSteps[a];
 
-                        if (p->IsActive(pp)
+                        if (p->IsActiveEx(pp)
                             && !dynamic_cast<FlipUVsProcess*>(p)
                             && !dynamic_cast<FlipWindingOrderProcess*>(p)
                             && !dynamic_cast<MakeLeftHandedProcess*>(p)) {

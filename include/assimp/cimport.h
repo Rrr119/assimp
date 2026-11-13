@@ -51,6 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <assimp/importerdesc.h>
+#include <assimp/postprocess.h>
 #include <assimp/types.h>
 
 #ifdef __cplusplus
@@ -117,7 +118,7 @@ typedef int aiBool;
  */
 ASSIMP_API const C_STRUCT aiScene *aiImportFile(
         const char *pFile,
-        unsigned int pFlags);
+        aiPostProcessFlags pFlags);
 
 // --------------------------------------------------------------------------------
 /** Reads the given file using user-defined I/O functions and returns
@@ -142,7 +143,7 @@ ASSIMP_API const C_STRUCT aiScene *aiImportFile(
  */
 ASSIMP_API const C_STRUCT aiScene *aiImportFileEx(
         const char *pFile,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         C_STRUCT aiFileIO *pFS);
 
 // --------------------------------------------------------------------------------
@@ -163,7 +164,7 @@ ASSIMP_API const C_STRUCT aiScene *aiImportFileEx(
  */
 ASSIMP_API const C_STRUCT aiScene *aiImportFileExWithProperties(
         const char *pFile,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         C_STRUCT aiFileIO *pFS,
         const C_STRUCT aiPropertyStore *pProps);
 
@@ -202,7 +203,7 @@ ASSIMP_API const C_STRUCT aiScene *aiImportFileExWithProperties(
 ASSIMP_API const C_STRUCT aiScene *aiImportFileFromMemory(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint);
 
 // --------------------------------------------------------------------------------
@@ -236,7 +237,7 @@ ASSIMP_API const C_STRUCT aiScene *aiImportFileFromMemory(
 ASSIMP_API const C_STRUCT aiScene *aiImportFileFromMemoryWithProperties(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint,
         const C_STRUCT aiPropertyStore *pProps);
 
@@ -257,7 +258,7 @@ ASSIMP_API const C_STRUCT aiScene *aiImportFileFromMemoryWithProperties(
  */
 ASSIMP_API const C_STRUCT aiScene *aiApplyPostProcessing(
         const C_STRUCT aiScene *pScene,
-        unsigned int pFlags);
+        aiPostProcessFlags pFlags);
 
 // --------------------------------------------------------------------------------
 /** Get one of the predefine log streams. This is the quick'n'easy solution to

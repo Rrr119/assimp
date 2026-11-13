@@ -128,6 +128,9 @@ corresponding preprocessor flag to selectively disable steps.
 #ifndef ASSIMP_BUILD_NO_DEBONE_PROCESS
 #   include "PostProcessing/DeboneProcess.h"
 #endif
+#ifndef ASSIMP_BUILD_NO_DECIMATE_PROCESS
+#   include "PostProcessing/DecimateProcess.h"
+#endif
 #if (!defined ASSIMP_BUILD_NO_GLOBALSCALE_PROCESS)
 #   include "PostProcessing/ScaleProcess.h"
 #endif
@@ -204,6 +207,9 @@ void GetPostProcessingStepInstanceList(std::vector< BaseProcess* >& out)
 #endif
 #if (!defined ASSIMP_BUILD_NO_FINDINVALIDDATA_PROCESS)
     out.push_back( new FindInvalidDataProcess());
+#endif
+#if (!defined ASSIMP_BUILD_NO_DECIMATE_PROCESS)
+    out.push_back( new DecimateProcess());
 #endif
 #if (!defined ASSIMP_BUILD_NO_OPTIMIZEMESHES_PROCESS)
     out.push_back( new OptimizeMeshesProcess());

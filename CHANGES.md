@@ -1,6 +1,17 @@
 ----------------------------------------------------------------------
 CHANGELOG
 ----------------------------------------------------------------------
+# Unreleased
+## What's Changed
+* Postprocessing
+  * Add `aiProcess_Decimate`, a QEM edge-collapse mesh simplifier with absolute
+    face-count or ratio targets.
+  * Preserve UV seams and material groups, include normal-angle costs, and
+    interpolate/renormalize skin weights for decimated meshes.
+  * Add `aiDecimateSettings` plus `AI_CONFIG_PP_DECIMATE_*` Importer properties.
+  * Extend post-processing flags to 64 bits so the new step can coexist with the
+    existing 32-bit flag space.
+
 # 6.0.2
 ## What's Changed
 * Fix export fbx: Wrong Materials in LayerElementMaterial if a node contains multi meshes  by @Riv1s-sSsA01 in https://github.com/assimp/assimp/pull/6103

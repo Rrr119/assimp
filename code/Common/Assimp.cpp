@@ -166,17 +166,17 @@ void ReportSceneNotFoundError() {
 
 // ------------------------------------------------------------------------------------------------
 // Reads the given file and returns its content.
-const aiScene *aiImportFile(const char *pFile, unsigned int pFlags) {
+const aiScene *aiImportFile(const char *pFile, aiPostProcessFlags pFlags) {
     return aiImportFileEx(pFile, pFlags, nullptr);
 }
 
 // ------------------------------------------------------------------------------------------------
-const aiScene *aiImportFileEx(const char *pFile, unsigned int pFlags, aiFileIO *pFS) {
+const aiScene *aiImportFileEx(const char *pFile, aiPostProcessFlags pFlags, aiFileIO *pFS) {
     return aiImportFileExWithProperties(pFile, pFlags, pFS, nullptr);
 }
 
 // ------------------------------------------------------------------------------------------------
-const aiScene *aiImportFileExWithProperties(const char *pFile, unsigned int pFlags,
+const aiScene *aiImportFileExWithProperties(const char *pFile, aiPostProcessFlags pFlags,
         aiFileIO *pFS, const aiPropertyStore *props) {
     ai_assert(nullptr != pFile);
 
@@ -223,7 +223,7 @@ const aiScene *aiImportFileExWithProperties(const char *pFile, unsigned int pFla
 const aiScene *aiImportFileFromMemory(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint) {
     return aiImportFileFromMemoryWithProperties(pBuffer, pLength, pFlags, pHint, nullptr);
 }
@@ -232,7 +232,7 @@ const aiScene *aiImportFileFromMemory(
 const aiScene *aiImportFileFromMemoryWithProperties(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint,
         const aiPropertyStore *props) {
     if (pBuffer == nullptr) {
@@ -302,7 +302,7 @@ void aiReleaseImport(const aiScene *pScene) {
 
 // ------------------------------------------------------------------------------------------------
 ASSIMP_API const aiScene *aiApplyPostProcessing(const aiScene *pScene,
-        unsigned int pFlags) {
+        aiPostProcessFlags pFlags) {
     const aiScene *sc = nullptr;
 
     ASSIMP_BEGIN_EXCEPTION_REGION();

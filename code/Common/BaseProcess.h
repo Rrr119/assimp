@@ -44,6 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define INCLUDED_AI_BASEPROCESS_H
 
 #include <assimp/GenericProperty.h>
+#include <assimp/postprocess.h>
 
 #include <map>
 
@@ -194,6 +195,20 @@ public:
      *   false if not.
      */
     virtual bool IsActive(unsigned int pFlags) const = 0;
+
+    // -------------------------------------------------------------------
+    /**
+     * @brief 64-bit aware alternative to IsActive().
+     *
+     * The default implementation forwards the low 32 bits to IsActive(), which
+     * keeps existing post-processing steps working unchanged. Steps using
+     * bits above 31 override this method.
+     * @param pFlags The full post-processing flag set.
+     * @return true if the step is enabled.
+     */
+    virtual bool IsActiveEx(aiPostProcessFlags pFlags) const {
+        return IsActive(static_cast<unsigned int>(pFlags));
+    }
 
     // -------------------------------------------------------------------
     /** Check whether this step expects its input vertex data to be

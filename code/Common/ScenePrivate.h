@@ -46,6 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_SCENEPRIVATE_H_INCLUDED
 
 #include <assimp/ai_assert.h>
+#include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
 namespace Assimp {
@@ -62,7 +63,7 @@ struct ScenePrivateData {
     Assimp::Importer* mOrigImporter;
 
     // List of post-processing steps already applied to the scene.
-    unsigned int mPPStepsApplied;
+    aiPostProcessFlags mPPStepsApplied;
 
     // true if the scene is a copy made with aiCopyScene()
     // or the corresponding C++ API. This means that user code
