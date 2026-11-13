@@ -62,7 +62,7 @@ struct ScenePrivateData {
     Assimp::Importer* mOrigImporter;
 
     // List of post-processing steps already applied to the scene.
-    unsigned int mPPStepsApplied;
+    aiPostProcessFlags mPPStepsApplied;
 
     // true if the scene is a copy made with aiCopyScene()
     // or the corresponding C++ API. This means that user code

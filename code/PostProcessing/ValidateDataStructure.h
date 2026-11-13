@@ -76,7 +76,7 @@ public:
     ~ValidateDSProcess() override = default;
 
     // -------------------------------------------------------------------
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     void Execute( aiScene* pScene) override;

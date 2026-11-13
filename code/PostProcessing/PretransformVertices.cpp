@@ -95,7 +95,7 @@ PretransformVertices::PretransformVertices() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool PretransformVertices::IsActive(unsigned int pFlags) const {
+bool PretransformVertices::IsActive(aiPostProcessFlags pFlags) const {
 	return (pFlags & aiProcess_PreTransformVertices) != 0;
 }
 

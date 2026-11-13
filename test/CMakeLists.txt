@@ -41,6 +41,7 @@ INCLUDE_DIRECTORIES(
     ${Assimp_SOURCE_DIR}/test/unit
     ${Assimp_SOURCE_DIR}/include
     ${Assimp_SOURCE_DIR}/code
+    ${Assimp_SOURCE_DIR}/contrib
 )
 
 if(NOT ASSIMP_HUNTER_ENABLED)
@@ -200,6 +201,7 @@ SET( MATH
 )
 
 SET( POST_PROCESSES
+  unit/utBakeTextureAtlas.cpp
   unit/utImproveCacheLocality.cpp
   unit/utFixInfacingNormals.cpp
   unit/utGenNormals.cpp

@@ -66,7 +66,7 @@ FindDegeneratesProcess::FindDegeneratesProcess() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool FindDegeneratesProcess::IsActive(unsigned int pFlags) const {
+bool FindDegeneratesProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != (pFlags & aiProcess_FindDegenerates);
 }
 

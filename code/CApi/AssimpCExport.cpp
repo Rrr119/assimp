@@ -108,12 +108,12 @@ ASSIMP_API void aiFreeScene(const C_STRUCT aiScene *pIn) {
 }
 
 // ------------------------------------------------------------------------------------------------
-ASSIMP_API aiReturn aiExportScene(const aiScene *pScene, const char *pFormatId, const char *pFileName, unsigned int pPreprocessing) {
+ASSIMP_API aiReturn aiExportScene(const aiScene *pScene, const char *pFormatId, const char *pFileName, aiPostProcessFlags pPreprocessing) {
     return ::aiExportSceneEx(pScene, pFormatId, pFileName, nullptr, pPreprocessing);
 }
 
 // ------------------------------------------------------------------------------------------------
-ASSIMP_API aiReturn aiExportSceneEx(const aiScene *pScene, const char *pFormatId, const char *pFileName, aiFileIO *pIO, unsigned int pPreprocessing) {
+ASSIMP_API aiReturn aiExportSceneEx(const aiScene *pScene, const char *pFormatId, const char *pFileName, aiFileIO *pIO, aiPostProcessFlags pPreprocessing) {
     Exporter exp;
 
     if (pIO) {
@@ -123,7 +123,7 @@ ASSIMP_API aiReturn aiExportSceneEx(const aiScene *pScene, const char *pFormatId
 }
 
 // ------------------------------------------------------------------------------------------------
-ASSIMP_API const C_STRUCT aiExportDataBlob *aiExportSceneToBlob(const aiScene *pScene, const char *pFormatId, unsigned int pPreprocessing) {
+ASSIMP_API const C_STRUCT aiExportDataBlob *aiExportSceneToBlob(const aiScene *pScene, const char *pFormatId, aiPostProcessFlags pPreprocessing) {
     Exporter exp;
     if (!exp.ExportToBlob(pScene, pFormatId, pPreprocessing)) {
         return nullptr;

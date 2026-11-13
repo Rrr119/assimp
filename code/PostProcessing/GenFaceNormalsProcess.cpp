@@ -58,7 +58,7 @@ using namespace Assimp;
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is in the given flag field.
-bool GenFaceNormalsProcess::IsActive(unsigned int pFlags) const {
+bool GenFaceNormalsProcess::IsActive(aiPostProcessFlags pFlags) const {
     force_ = (pFlags & aiProcess_ForceGenNormals) != 0;
     flippedWindingOrder_ = (pFlags & aiProcess_FlipWindingOrder) != 0;
     leftHanded_ = (pFlags & aiProcess_MakeLeftHanded) != 0;

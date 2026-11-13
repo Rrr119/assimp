@@ -62,7 +62,7 @@ ai_real ScaleProcess::getScale() const {
 }
 
 // ------------------------------------------------------------------------------------------------
-bool ScaleProcess::IsActive( unsigned int pFlags ) const {
+bool ScaleProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return ( pFlags & aiProcess_GlobalScale ) != 0;
 }
 

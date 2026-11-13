@@ -54,7 +54,7 @@ SplitLargeMeshesProcess_Triangle::SplitLargeMeshesProcess_Triangle() {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool SplitLargeMeshesProcess_Triangle::IsActive( unsigned int pFlags) const {
+bool SplitLargeMeshesProcess_Triangle::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_SplitLargeMeshes) != 0;
 }
 
@@ -329,7 +329,7 @@ SplitLargeMeshesProcess_Vertex::SplitLargeMeshesProcess_Vertex() {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool SplitLargeMeshesProcess_Vertex::IsActive( unsigned int pFlags) const {
+bool SplitLargeMeshesProcess_Vertex::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_SplitLargeMeshes) != 0;
 }
 

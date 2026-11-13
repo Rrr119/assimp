@@ -55,7 +55,7 @@ using namespace Assimp;
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool DropFaceNormalsProcess::IsActive(unsigned int pFlags) const {
+bool DropFaceNormalsProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_DropNormals) != 0;
 }
 

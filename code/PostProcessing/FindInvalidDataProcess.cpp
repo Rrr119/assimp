@@ -62,7 +62,7 @@ FindInvalidDataProcess::FindInvalidDataProcess() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool FindInvalidDataProcess::IsActive(unsigned int pFlags) const {
+bool FindInvalidDataProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != (pFlags & aiProcess_FindInvalidData);
 }
 

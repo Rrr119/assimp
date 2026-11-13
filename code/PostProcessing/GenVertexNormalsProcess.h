@@ -71,7 +71,7 @@ public:
     * @return true if the process is present in this flag fields,
     *   false if not.
     */
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     /** Called prior to ExecuteOnScene().

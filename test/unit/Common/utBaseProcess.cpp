@@ -80,7 +80,7 @@ public:
 
     ~TestingBaseProcess() override = default;
 
-    bool IsActive( unsigned int ) const override {
+    bool IsActive( aiPostProcessFlags ) const override {
         return true;
     }
 

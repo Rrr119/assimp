@@ -67,7 +67,7 @@ public:
     ~EmbedTexturesProcess() override = default;
 
     /// Overwritten, @see BaseProcess
-    bool IsActive(unsigned int pFlags) const override;
+    bool IsActive(aiPostProcessFlags pFlags) const override;
 
     /// Overwritten, @see BaseProcess
     void SetupProperties(const Importer* pImp) override;

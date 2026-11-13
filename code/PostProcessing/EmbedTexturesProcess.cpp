@@ -50,7 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Assimp;
 
-bool EmbedTexturesProcess::IsActive(unsigned int pFlags) const {
+bool EmbedTexturesProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_EmbedTextures) != 0;
 }
 

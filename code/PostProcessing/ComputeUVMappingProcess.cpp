@@ -58,7 +58,7 @@ const static ai_real angle_epsilon = ai_real(0.95);
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool ComputeUVMappingProcess::IsActive(unsigned int pFlags) const {
+bool ComputeUVMappingProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_GenUVCoords) != 0;
 }
 

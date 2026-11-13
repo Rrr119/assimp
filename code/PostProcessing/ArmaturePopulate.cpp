@@ -56,7 +56,7 @@ static bool IsBoneNode(const aiString &bone_name, std::vector<aiBone *> &bones) 
     return false;
 }
 
-bool ArmaturePopulate::IsActive(unsigned int pFlags) const {
+bool ArmaturePopulate::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_PopulateArmatureData) != 0;
 }
 

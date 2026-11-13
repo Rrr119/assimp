@@ -722,6 +722,8 @@ if (NOT ASSIMP_NO_EXPORT)
 endif()
 
 SET( PostProcessing_SRCS
+  PostProcessing/BakeTextureAtlas.cpp
+  PostProcessing/BakeTextureAtlas.h
   PostProcessing/CalcTangentsProcess.cpp
   PostProcessing/CalcTangentsProcess.h
   PostProcessing/ComputeUVMappingProcess.cpp

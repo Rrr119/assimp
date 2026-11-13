@@ -164,7 +164,7 @@ ASSIMP_API void aiFreeScene(const C_STRUCT aiScene *pIn);
 ASSIMP_API aiReturn aiExportScene(const C_STRUCT aiScene *pScene,
         const char *pFormatId,
         const char *pFileName,
-        unsigned int pPreprocessing);
+        aiPostProcessFlags pPreprocessing);
 
 // --------------------------------------------------------------------------------
 /** Exports the given scene to a chosen file format using custom IO logic supplied by you.
@@ -185,7 +185,7 @@ ASSIMP_API aiReturn aiExportSceneEx(const C_STRUCT aiScene *pScene,
         const char *pFormatId,
         const char *pFileName,
         C_STRUCT aiFileIO *pIO,
-        unsigned int pPreprocessing);
+        aiPostProcessFlags pPreprocessing);
 
 // --------------------------------------------------------------------------------
 /** Describes a blob of exported scene data. Use #aiExportSceneToBlob() to create a blob containing an
@@ -256,7 +256,7 @@ struct aiExportDataBlob {
 * @return the exported data or NULL in case of error
 */
 ASSIMP_API const C_STRUCT aiExportDataBlob *aiExportSceneToBlob(const C_STRUCT aiScene *pScene, const char *pFormatId,
-        unsigned int pPreprocessing);
+        aiPostProcessFlags pPreprocessing);
 
 // --------------------------------------------------------------------------------
 /** Releases the memory associated with the given exported data. Use this function to free a data blob

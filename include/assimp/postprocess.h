@@ -605,6 +605,23 @@ enum aiPostProcessSteps
     aiProcess_GenBoundingBoxes = 0x80000000
 };
 
+// ---------------------------------------------------------------------------------------
+/** @def aiProcess_BakeTextureAtlas
+ *  @brief Bakes all base-color textures into a single PNG texture atlas.
+ *
+ *  The atlas is written to the directory configured through
+ *  #AI_CONFIG_PP_BTA_OUTPUT_DIR. If no directory is configured, the directory
+ *  of the imported model is used. The maximum atlas dimension can be configured
+ *  through #AI_CONFIG_PP_BTA_MAX_ATLAS_SIZE and defaults to 2048 pixels.
+ *
+ *  Material texture references are rewritten to the generated atlas and mesh
+ *  texture coordinates are remapped. Vertices are duplicated where necessary
+ *  to keep every face inside its atlas region. If other textures share the
+ *  base-color UV channel, a separate UV channel is created for the atlas so
+ *  those textures keep sampling with their original coordinates.
+ */
+#define aiProcess_BakeTextureAtlas ((aiPostProcessFlags)0x100000000ULL)
+
 
 // ---------------------------------------------------------------------------------------
 /** @def aiProcess_ConvertToLeftHanded

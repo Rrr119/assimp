@@ -392,7 +392,7 @@ public:
      *  @param pFlags Bitwise combination of the aiPostProcess flags.
      *  @return true if this flag combination is fine.
      */
-    bool ValidateFlags(unsigned int pFlags) const;
+    bool ValidateFlags(aiPostProcessFlags pFlags) const;
 
     // -------------------------------------------------------------------
     /** Reads the given file and returns its contents if successful.
@@ -418,7 +418,7 @@ public:
      */
     const aiScene *ReadFile(
             const char *pFile,
-            unsigned int pFlags);
+            aiPostProcessFlags pFlags);
 
     // -------------------------------------------------------------------
     /** Reads the given file from a memory buffer and returns its
@@ -460,7 +460,7 @@ public:
     const aiScene *ReadFileFromMemory(
             const void *pBuffer,
             size_t pLength,
-            unsigned int pFlags,
+            aiPostProcessFlags pFlags,
             const char *pHint = "");
 
     // -------------------------------------------------------------------
@@ -481,7 +481,7 @@ public:
      *
      *  @note The method does nothing if no scene is currently bound
      *    to the #Importer instance.  */
-    const aiScene *ApplyPostProcessing(unsigned int pFlags);
+    const aiScene *ApplyPostProcessing(aiPostProcessFlags pFlags);
 
     const aiScene *ApplyCustomizedPostProcessing(BaseProcess *rootProcess, bool requestValidation);
 
@@ -493,7 +493,7 @@ public:
      * @see ReadFile(const char*, pFlags)  */
     const aiScene *ReadFile(
             const std::string &pFile,
-            unsigned int pFlags);
+            aiPostProcessFlags pFlags);
 
     // -------------------------------------------------------------------
     /** Frees the current scene.
@@ -668,7 +668,7 @@ protected:
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-AI_FORCE_INLINE const aiScene *Importer::ReadFile(const std::string &pFile, unsigned int pFlags) {
+AI_FORCE_INLINE const aiScene *Importer::ReadFile(const std::string &pFile, aiPostProcessFlags pFlags) {
     return ReadFile(pFile.c_str(), pFlags);
 }
 // ----------------------------------------------------------------------------

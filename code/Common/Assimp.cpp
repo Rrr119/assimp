@@ -166,17 +166,17 @@ void ReportSceneNotFoundError() {
 
 // ------------------------------------------------------------------------------------------------
 // Reads the given file and returns its content.
-const aiScene *aiImportFile(const char *pFile, unsigned int pFlags) {
+const aiScene *aiImportFile(const char *pFile, aiPostProcessFlags pFlags) {
     return aiImportFileEx(pFile, pFlags, nullptr);
 }
 
 // ------------------------------------------------------------------------------------------------
-const aiScene *aiImportFileEx(const char *pFile, unsigned int pFlags, aiFileIO *pFS) {
+const aiScene *aiImportFileEx(const char *pFile, aiPostProcessFlags pFlags, aiFileIO *pFS) {
     return aiImportFileExWithProperties(pFile, pFlags, pFS, nullptr);
 }
 
 // ------------------------------------------------------------------------------------------------
-const aiScene *aiImportFileExWithProperties(const char *pFile, unsigned int pFlags,
+const aiScene *aiImportFileExWithProperties(const char *pFile, aiPostProcessFlags pFlags,
         aiFileIO *pFS, const aiPropertyStore *props) {
     ai_assert(nullptr != pFile);
 
@@ -223,7 +223,7 @@ const aiScene *aiImportFileExWithProperties(const char *pFile, unsigned int pFla
 const aiScene *aiImportFileFromMemory(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint) {
     return aiImportFileFromMemoryWithProperties(pBuffer, pLength, pFlags, pHint, nullptr);
 }
@@ -232,7 +232,7 @@ const aiScene *aiImportFileFromMemory(
 const aiScene *aiImportFileFromMemoryWithProperties(
         const char *pBuffer,
         unsigned int pLength,
-        unsigned int pFlags,
+        aiPostProcessFlags pFlags,
         const char *pHint,
         const aiPropertyStore *props) {
     if (pBuffer == nullptr) {
@@ -302,7 +302,7 @@ void aiReleaseImport(const aiScene *pScene) {
 
 // ------------------------------------------------------------------------------------------------
 ASSIMP_API const aiScene *aiApplyPostProcessing(const aiScene *pScene,
-        unsigned int pFlags) {
+        aiPostProcessFlags pFlags) {
     const aiScene *sc = nullptr;
 
     ASSIMP_BEGIN_EXCEPTION_REGION();
@@ -1308,14 +1308,20 @@ ASSIMP_API void aiQuaternionInterpolate(
 // stb_image is a lightweight image loader. It is shared by:
 //  - M3D import
 //  - PBRT export
+//  - texture-atlas baking
 // Since it's a header-only library, its implementation must be instantiated in some cpp file.
 // Don't scatter this task over multiple importers/exporters. Maintain it in a central place (here!).
 
 #define ASSIMP_HAS_PBRT_EXPORT (!ASSIMP_BUILD_NO_EXPORT && !ASSIMP_BUILD_NO_PBRT_EXPORTER)
 #define ASSIMP_HAS_M3D ((!ASSIMP_BUILD_NO_EXPORT && !ASSIMP_BUILD_NO_M3D_EXPORTER) || !ASSIMP_BUILD_NO_M3D_IMPORTER)
+#if (!defined ASSIMP_BUILD_NO_BAKETEXTUREATLAS_PROCESS)
+#define ASSIMP_HAS_TEXTURE_ATLAS 1
+#else
+#define ASSIMP_HAS_TEXTURE_ATLAS 0
+#endif
 
 #ifndef STB_USE_HUNTER
-#if ASSIMP_HAS_PBRT_EXPORT
+#if ASSIMP_HAS_PBRT_EXPORT || ASSIMP_HAS_TEXTURE_ATLAS
 #define ASSIMP_NEEDS_STB_IMAGE 1
 #elif ASSIMP_HAS_M3D
 #define ASSIMP_NEEDS_STB_IMAGE 1
@@ -1325,8 +1331,10 @@ ASSIMP_API void aiQuaternionInterpolate(
 
 // Ensure all symbols are linked correctly
 #if ASSIMP_NEEDS_STB_IMAGE
-// Share stb_image's PNG loader with other importers/exporters instead of bringing our own copy.
+#if !ASSIMP_HAS_PBRT_EXPORT && !ASSIMP_HAS_TEXTURE_ATLAS
+// Share stb_image's PNG loader with M3D instead of bringing our own copy.
 #define STBI_ONLY_PNG
+#endif
 #ifdef ASSIMP_USE_STB_IMAGE_STATIC
 #define STB_IMAGE_STATIC
 #endif

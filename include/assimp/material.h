@@ -1111,6 +1111,12 @@ extern "C" {
 //! @endcond
 
 // ---------------------------------------------------------------------------
+// Texture-atlas metadata written by aiProcess_BakeTextureAtlas.
+#define AI_MATKEY_PP_BTA_SOURCE_TEXTURE "$mat.bakeTextureAtlas.source", 0, 0
+#define AI_MATKEY_PP_BTA_UV_RECT        "$mat.bakeTextureAtlas.uvRect", 0, 0
+#define AI_MATKEY_PP_BTA_SRGB           "$mat.bakeTextureAtlas.srgb", 0, 0
+
+// ---------------------------------------------------------------------------
 #define AI_MATKEY_TEXTURE(type, N) _AI_MATKEY_TEXTURE_BASE, type, N
 
 // For backward compatibility and simplicity

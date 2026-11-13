@@ -55,7 +55,7 @@ DeboneProcess::DeboneProcess() : mNumBones(0), mNumBonesCanDoWithout(0), mThresh
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool DeboneProcess::IsActive( unsigned int pFlags) const {
+bool DeboneProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_Debone) != 0;
 }
 

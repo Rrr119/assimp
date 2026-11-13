@@ -62,7 +62,7 @@ ValidateDSProcess::ValidateDSProcess() : mScene(nullptr) {}
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool ValidateDSProcess::IsActive(unsigned int pFlags) const {
+bool ValidateDSProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_ValidateDataStructure) != 0;
 }
 // ------------------------------------------------------------------------------------------------

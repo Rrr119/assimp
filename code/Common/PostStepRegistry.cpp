@@ -62,6 +62,9 @@ corresponding preprocessor flag to selectively disable steps.
 #ifndef ASSIMP_BUILD_NO_TRIANGULATE_PROCESS
 #   include "PostProcessing/TriangulateProcess.h"
 #endif
+#if (!defined ASSIMP_BUILD_NO_BAKETEXTUREATLAS_PROCESS)
+#   include "PostProcessing/BakeTextureAtlas.h"
+#endif
 #ifndef ASSIMP_BUILD_NO_DROPFACENORMALS_PROCESS
 #   include "PostProcessing/DropFaceNormalsProcess.h"
 #endif
@@ -192,6 +195,9 @@ void GetPostProcessingStepInstanceList(std::vector< BaseProcess* >& out)
 #endif
 #if (!defined ASSIMP_BUILD_NO_TRIANGULATE_PROCESS)
     out.push_back( new TriangulateProcess());
+#endif
+#if (!defined ASSIMP_BUILD_NO_BAKETEXTUREATLAS_PROCESS)
+    out.push_back( new BakeTextureAtlasProcess());
 #endif
 #if (!defined ASSIMP_BUILD_NO_FINDDEGENERATES_PROCESS)
     //find degenerates should run after triangulation (to sort out small

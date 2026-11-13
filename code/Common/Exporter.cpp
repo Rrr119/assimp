@@ -335,7 +335,7 @@ void Exporter::SetProgressHandler(ProgressHandler* pHandler) {
 
 // ------------------------------------------------------------------------------------------------
 const aiExportDataBlob* Exporter::ExportToBlob( const aiScene* pScene, const char* pFormatId,
-                                                unsigned int pPreprocessing, const ExportProperties* pProperties) {
+                                                aiPostProcessFlags pPreprocessing, const ExportProperties* pProperties) {
 	ai_assert(nullptr != pimpl);
     if (pimpl->blob) {
         delete pimpl->blob;
@@ -361,7 +361,7 @@ const aiExportDataBlob* Exporter::ExportToBlob( const aiScene* pScene, const cha
 
 // ------------------------------------------------------------------------------------------------
 aiReturn Exporter::Export( const aiScene* pScene, const char* pFormatId, const char* pPath,
-        unsigned int pPreprocessing, const ExportProperties* pProperties) {
+        aiPostProcessFlags pPreprocessing, const ExportProperties* pProperties) {
     ASSIMP_BEGIN_EXCEPTION_REGION();
 	ai_assert(nullptr != pimpl);
     // when they create scenes from scratch, users will likely create them not in verbose
@@ -390,12 +390,14 @@ aiReturn Exporter::Export( const aiScene* pScene, const char* pFormatId, const c
                 // steps that are not idempotent, i.e. we might need to run them again, usually to get back to the
                 // original state before the step was applied first. When checking which steps we don't need
                 // to run, those are excluded.
-                const unsigned int nonIdempotentSteps = aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_MakeLeftHanded;
+                const aiPostProcessFlags nonIdempotentSteps = aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_MakeLeftHanded;
 
                 // Erase all pp steps that were already applied to this scene
-                const unsigned int pp = (exp.mEnforcePP | pPreprocessing) & ~(priv && !priv->mIsCopy
+                const aiPostProcessFlags stepsToErase = (priv && !priv->mIsCopy)
                     ? (priv->mPPStepsApplied & ~nonIdempotentSteps)
-                    : 0u);
+                    : static_cast<aiPostProcessFlags>(0);
+                const aiPostProcessFlags pp =
+                        (exp.mEnforcePP | pPreprocessing) & ~stepsToErase;
 
                 // If no extra post-processing was specified, and we obtained this scene from an
                 // Assimp importer, apply the reverse steps automatically.

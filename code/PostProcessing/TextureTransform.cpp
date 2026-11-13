@@ -51,7 +51,7 @@ namespace Assimp {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool TextureTransformStep::IsActive( unsigned int pFlags) const {
+bool TextureTransformStep::IsActive( aiPostProcessFlags pFlags ) const {
     return  (pFlags & aiProcess_TransformUVCoords) != 0;
 }
 

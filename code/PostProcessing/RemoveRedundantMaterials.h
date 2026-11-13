@@ -65,7 +65,7 @@ public:
 
     // -------------------------------------------------------------------
     // Check whether step is active
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     // Execute step on a given scene

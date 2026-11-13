@@ -79,7 +79,7 @@ void flipUVs(aiMeshType *pMesh) {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool MakeLeftHandedProcess::IsActive(unsigned int pFlags) const {
+bool MakeLeftHandedProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != (pFlags & aiProcess_MakeLeftHanded);
 }
 
@@ -249,7 +249,7 @@ FlipUVsProcess::~FlipUVsProcess() = default;
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool FlipUVsProcess::IsActive(unsigned int pFlags) const {
+bool FlipUVsProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != (pFlags & aiProcess_FlipUVs);
 }
 
@@ -303,7 +303,7 @@ void FlipUVsProcess::ProcessMesh(aiMesh *pMesh) {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool FlipWindingOrderProcess::IsActive(unsigned int pFlags) const {
+bool FlipWindingOrderProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != (pFlags & aiProcess_FlipWindingOrder);
 }
 

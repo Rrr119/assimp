@@ -58,7 +58,7 @@ RemoveRedundantMatsProcess::RemoveRedundantMatsProcess() : mConfigFixedMaterials
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool RemoveRedundantMatsProcess::IsActive( unsigned int pFlags) const {
+bool RemoveRedundantMatsProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_RemoveRedundantMaterials) != 0;
 }
 

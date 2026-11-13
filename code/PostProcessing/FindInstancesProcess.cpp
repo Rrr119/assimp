@@ -60,7 +60,7 @@ FindInstancesProcess::FindInstancesProcess()
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool FindInstancesProcess::IsActive( unsigned int pFlags) const
+bool FindInstancesProcess::IsActive( aiPostProcessFlags pFlags ) const
 {
     // FindInstances makes absolutely no sense together with PreTransformVertices
     // fixme: spawn error message somewhere else?

@@ -50,7 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Assimp {
 
-bool GenBoundingBoxesProcess::IsActive(unsigned int pFlags) const {
+bool GenBoundingBoxesProcess::IsActive(aiPostProcessFlags pFlags) const {
     return 0 != ( pFlags & aiProcess_GenBoundingBoxes );
 }
 

@@ -68,7 +68,7 @@ public:
 
     // -------------------------------------------------------------------
     // Check whether the pp step is active
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     // Executes the pp step on a given scene

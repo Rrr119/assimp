@@ -193,7 +193,7 @@ public:
      * @return true if the process is present in this flag fields,
      *   false if not.
      */
-    virtual bool IsActive(unsigned int pFlags) const = 0;
+    virtual bool IsActive(aiPostProcessFlags pFlags) const = 0;
 
     // -------------------------------------------------------------------
     /** Check whether this step expects its input vertex data to be

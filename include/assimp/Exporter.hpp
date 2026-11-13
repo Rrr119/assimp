@@ -191,9 +191,9 @@ public:
     * @note Use aiCopyScene() to get a modifiable copy of a previously
     *   imported scene. */
     const aiExportDataBlob *ExportToBlob(const aiScene *pScene, const char *pFormatId,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+            aiPostProcessFlags pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
     const aiExportDataBlob *ExportToBlob(const aiScene *pScene, const std::string &pFormatId,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+            aiPostProcessFlags pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
 
     // -------------------------------------------------------------------
     /** Convenience function to export directly to a file. Use
@@ -229,9 +229,9 @@ public:
      * @note Use aiCopyScene() to get a modifiable copy of a previously
      *   imported scene.*/
     aiReturn Export(const aiScene *pScene, const char *pFormatId, const char *pPath,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+            aiPostProcessFlags pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
     aiReturn Export(const aiScene *pScene, const std::string &pFormatId, const std::string &pPath,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+            aiPostProcessFlags pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
 
     // -------------------------------------------------------------------
     /** Returns an error description of an error that occurred in #Export
@@ -492,13 +492,13 @@ public:
 
 // ----------------------------------------------------------------------------------
 inline const aiExportDataBlob *Exporter::ExportToBlob(const aiScene *pScene, const std::string &pFormatId,
-        unsigned int pPreprocessing, const ExportProperties *pProperties) {
+        aiPostProcessFlags pPreprocessing, const ExportProperties *pProperties) {
     return ExportToBlob(pScene, pFormatId.c_str(), pPreprocessing, pProperties);
 }
 
 // ----------------------------------------------------------------------------------
 inline aiReturn Exporter ::Export(const aiScene *pScene, const std::string &pFormatId,
-        const std::string &pPath, unsigned int pPreprocessing,
+        const std::string &pPath, aiPostProcessFlags pPreprocessing,
         const ExportProperties *pProperties) {
     return Export(pScene, pFormatId.c_str(), pPath.c_str(), pPreprocessing, pProperties);
 }

@@ -176,7 +176,7 @@ namespace {
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool TriangulateProcess::IsActive( unsigned int pFlags) const {
+bool TriangulateProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_Triangulate) != 0;
 }
 

@@ -71,7 +71,7 @@ public:
 
     // -------------------------------------------------------------------
     /// Returns active state.
-    bool IsActive(unsigned int pFlags) const override;
+    bool IsActive(aiPostProcessFlags pFlags) const override;
 
     // -------------------------------------------------------------------
     /// Setup import settings

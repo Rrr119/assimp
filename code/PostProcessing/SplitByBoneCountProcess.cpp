@@ -61,7 +61,7 @@ SplitByBoneCountProcess::SplitByBoneCountProcess() : mMaxBoneCount(AI_SBBC_DEFAU
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag.
-bool SplitByBoneCountProcess::IsActive( unsigned int pFlags) const {
+bool SplitByBoneCountProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return !!(pFlags & aiProcess_SplitByBoneCount);
 }
 

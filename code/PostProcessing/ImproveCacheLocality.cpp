@@ -112,7 +112,7 @@ ImproveCacheLocalityProcess::ImproveCacheLocalityProcess() : mConfigCacheDepth(P
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool ImproveCacheLocalityProcess::IsActive(unsigned int pFlags) const {
+bool ImproveCacheLocalityProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_ImproveCacheLocality) != 0;
 }
 

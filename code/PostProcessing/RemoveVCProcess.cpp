@@ -56,7 +56,7 @@ RemoveVCProcess::RemoveVCProcess() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool RemoveVCProcess::IsActive(unsigned int pFlags) const {
+bool RemoveVCProcess::IsActive(aiPostProcessFlags pFlags) const {
     return (pFlags & aiProcess_RemoveComponent) != 0;
 }
 

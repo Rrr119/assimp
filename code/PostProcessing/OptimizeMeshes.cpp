@@ -71,7 +71,7 @@ OptimizeMeshesProcess::OptimizeMeshesProcess()
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool OptimizeMeshesProcess::IsActive( unsigned int pFlags) const
+bool OptimizeMeshesProcess::IsActive( aiPostProcessFlags pFlags ) const
 {
     // Our behaviour needs to be different if the SortByPType or SplitLargeMeshes
     // steps are active. Thus we need to query their flags here and store the

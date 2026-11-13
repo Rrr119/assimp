@@ -60,7 +60,7 @@ LimitBoneWeightsProcess::LimitBoneWeightsProcess() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool LimitBoneWeightsProcess::IsActive( unsigned int pFlags) const {
+bool LimitBoneWeightsProcess::IsActive( aiPostProcessFlags pFlags ) const {
     return (pFlags & aiProcess_LimitBoneWeights) != 0;
 }
 

@@ -60,7 +60,7 @@ GenVertexNormalsProcess::GenVertexNormalsProcess() :
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
-bool GenVertexNormalsProcess::IsActive(unsigned int pFlags) const {
+bool GenVertexNormalsProcess::IsActive(aiPostProcessFlags pFlags) const {
     force_ = (pFlags & aiProcess_ForceGenNormals) != 0;
     flippedWindingOrder_ = (pFlags & aiProcess_FlipWindingOrder) != 0;
     leftHanded_ = (pFlags & aiProcess_MakeLeftHanded) != 0;

@@ -78,7 +78,7 @@ public:
     ~MakeLeftHandedProcess() override = default;
 
     // -------------------------------------------------------------------
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     void Execute( aiScene* pScene) override;
@@ -135,7 +135,7 @@ public:
     ~FlipWindingOrderProcess() override = default;
 
     // -------------------------------------------------------------------
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     void Execute( aiScene* pScene) override;
@@ -159,7 +159,7 @@ public:
     ~FlipUVsProcess() override;
 
     // -------------------------------------------------------------------
-    bool IsActive( unsigned int pFlags) const override;
+    bool IsActive( aiPostProcessFlags pFlags ) const override;
 
     // -------------------------------------------------------------------
     void Execute( aiScene* pScene) override;

@@ -334,7 +334,7 @@ aiMesh *MakeSubmesh(const aiMesh *superMesh, const std::vector<unsigned int> &su
 // Utility post-process step to share the spatial sort tree between
 // all steps which use it to speedup its computations.
 class ComputeSpatialSortProcess : public BaseProcess {
-    bool IsActive(unsigned int pFlags) const {
+    bool IsActive(aiPostProcessFlags pFlags) const {
         return nullptr != shared && 0 != (pFlags & (aiProcess_CalcTangentSpace |
                                                            aiProcess_GenNormals | aiProcess_JoinIdenticalVertices));
     }
@@ -360,7 +360,7 @@ class ComputeSpatialSortProcess : public BaseProcess {
 // -------------------------------------------------------------------------------
 // ... and the same again to cleanup the whole stuff
 class DestroySpatialSortProcess : public BaseProcess {
-    bool IsActive(unsigned int pFlags) const {
+    bool IsActive(aiPostProcessFlags pFlags) const {
         return nullptr != shared && 0 != (pFlags & (aiProcess_CalcTangentSpace |
                                                         aiProcess_GenNormals | aiProcess_JoinIdenticalVertices));
     }

@@ -365,7 +365,7 @@ bool Importer::IsDefaultProgressHandler() const {
 
 // ------------------------------------------------------------------------------------------------
 // Validate post process step flags
-bool _ValidateFlags(unsigned int pFlags) {
+bool _ValidateFlags(aiPostProcessFlags pFlags) {
     if (pFlags & aiProcess_GenSmoothNormals && pFlags & aiProcess_GenNormals)   {
         ASSIMP_LOG_ERROR("#aiProcess_GenSmoothNormals and #aiProcess_GenNormals are incompatible");
         return false;
@@ -443,7 +443,7 @@ aiScene* Importer::GetOrphanedScene() {
 
 // ------------------------------------------------------------------------------------------------
 // Validate post-processing flags
-bool Importer::ValidateFlags(unsigned int pFlags) const {
+bool Importer::ValidateFlags(aiPostProcessFlags pFlags) const {
     ASSIMP_BEGIN_EXCEPTION_REGION();
     // run basic checks for mutually exclusive flags
     if(!_ValidateFlags(pFlags)) {
@@ -456,11 +456,11 @@ bool Importer::ValidateFlags(unsigned int pFlags) const {
         return false;
     }
 #endif
-    pFlags &= ~aiProcess_ValidateDataStructure;
+    pFlags &= ~static_cast<aiPostProcessFlags>(aiProcess_ValidateDataStructure);
 
     // Now iterate through all bits which are set in the flags and check whether we find at least
     // one pp plugin which handles it.
-    for (unsigned int mask = 1; mask < (1u << (sizeof(unsigned int)*8-1));mask <<= 1) {
+    for (aiPostProcessFlags mask = 1; mask != 0; mask <<= 1) {
 
         if (pFlags & mask) {
 
@@ -482,7 +482,7 @@ bool Importer::ValidateFlags(unsigned int pFlags) const {
 }
 
 // ------------------------------------------------------------------------------------------------
-const aiScene* Importer::ReadFileFromMemory(const void* pBuffer, size_t pLength, unsigned int pFlags, const char* pHint ) {
+const aiScene* Importer::ReadFileFromMemory(const void* pBuffer, size_t pLength, aiPostProcessFlags pFlags, const char* pHint ) {
     ai_assert(nullptr != pimpl);
 
     IOSystem* io = pimpl->mIOHandler;
@@ -586,7 +586,7 @@ void WriteLogOpening(const std::string& file) {
 
 // ------------------------------------------------------------------------------------------------
 // Reads the given file and returns its contents if successful.
-const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags) {
+const aiScene* Importer::ReadFile( const char* _pFile, aiPostProcessFlags pFlags) {
     ai_assert(nullptr != pimpl);
 
     ASSIMP_BEGIN_EXCEPTION_REGION();
@@ -750,7 +750,8 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags) {
             }
 
             // Ensure that the validation process won't be called twice
-            ApplyPostProcessing(pFlags & (~aiProcess_ValidateDataStructure));
+            ApplyPostProcessing(pFlags &
+                    (~static_cast<aiPostProcessFlags>(aiProcess_ValidateDataStructure)));
         }
         // if failed, extract the error string
         else if( !pimpl->mScene) {
@@ -789,7 +790,7 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags) {
 
 // ------------------------------------------------------------------------------------------------
 // Apply post-processing to the currently bound scene
-const aiScene* Importer::ApplyPostProcessing(unsigned int pFlags) {
+const aiScene* Importer::ApplyPostProcessing(aiPostProcessFlags pFlags) {
     ai_assert(nullptr != pimpl);
 
     ASSIMP_BEGIN_EXCEPTION_REGION();
